@@ -1,7 +1,7 @@
 
 ![hxAri](https://raw.githubusercontent.com/hxAri/hxAri/main/public/images/1677866924;deVw5x2Uzx.png)
 
-Community Complaint Web with **VueJS** and also **CodeIgniter4** as the main backend, interested in trying it?
+Community Complaints Web with **VueJS** and also **CodeIgniter4** as the main backend, interested in trying it?
 
 ## Features
 * Admin
