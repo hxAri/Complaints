@@ -16,3 +16,9 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 /vendor/
+
+writeable
+
+#vuejs
+.bin
+node_modules
