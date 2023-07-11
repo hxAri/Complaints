@@ -107,7 +107,7 @@ final class Action extends BaseController
 					 // Check if account successfull deleted.
 					 if( Models\Publics::delete([ "nik", $this->request->getPost( "nik" ) ]) )
 					 {
-					 	return([ $this->logout(), redirect()->to( base_url( "/signin?trigger=info&&text=Akun+berhasil+dihapus" ) ) ][1]);
+					 	return([ $this->logout(), redirect()->to( base_url( "/signin?trigger=info&&text=Account+deleted+successfully" ) ) ][1]);
 					 }
 				}
 				else {
@@ -115,10 +115,10 @@ final class Action extends BaseController
 					// Check if account successfull deleted.
 					if( Models\Officer::delete([ "id", $this->request->getPost( "id" ) ]) )
 					{
-						return([ $this->logout(), redirect()->to( base_url( "/signin/officer?trigger=info&&text=Akun+berhasil+dihapus" ) ) ][1]);
+						return([ $this->logout(), redirect()->to( base_url( "/signin/officer?trigger=info&&text=Account+deleted+successfully" ) ) ][1]);
 					}
 				}
-				throw new Error( "Terjadi kesalahan saat menghapus akun" );
+				throw new Error( "There was an error deleting the account" );
 			}
 			catch( Throwable $e )
 			{
@@ -147,9 +147,9 @@ final class Action extends BaseController
 				// Check if officer successfull deleted.
 				if( Models\Officer::delete([ "username", $this->request->getPost( "username" ) ]) )
 				{
-					return( redirect() )->to( base_url( "/?tab=officer&&trigger=success&&text=Petugas+berhasil+dihapus" ) );
+					return( redirect() )->to( base_url( "/?tab=officer&&trigger=success&&text=Officer+removed+successfully" ) );
 				}
-				throw new Error( "Terjadi kesalahan saat menghapus petugas" );
+				throw new Error( "An error occurred while deleting the clerk" );
 			}
 			catch( Throwable $e )
 			{
@@ -178,9 +178,9 @@ final class Action extends BaseController
 				// Check if publics successfull deleted.
 				if( Models\Publics::delete([ "username", $this->request->getPost( "username" ) ]) )
 				{
-					return( redirect() )->to( base_url( "/?tab=publics&&trigger=success&&text=Masyarakat+berhasil+dihapus" ) );
+					return( redirect() )->to( base_url( "/?tab=publics&&trigger=success&&text=Society+has+been+successfully+removed" ) );
 				}
-				throw new Error( "Terjadi kesalahan saat menghapus masyarakat" );
+				throw new Error( "There was an error deleting the community" );
 			}
 			catch( Throwable $e )
 			{
@@ -213,7 +213,7 @@ final class Action extends BaseController
 			// Check if file is corrupt.
 			if( $picturef->getError() )
 			{
-				return( redirect() )->to( base_url( "/?tab=report-make&&trigger=warning&&text=Gambar+rusak+atau+cacat" ) );
+				return( redirect() )->to( base_url( "/?tab=report-make&&trigger=warning&&text=Uploaded+images+have+been+corrupted+or+deformed" ) );
 			}
 			else {
 				
@@ -228,7 +228,7 @@ final class Action extends BaseController
 						$nik = $nik->nik;
 					}
 					else {
-						return([ $this->logout(), redirect()->to( base_url( "/signin?trigger=warning&&text=Pengguna+tidak+ditemukan+atau+sesi+login+tidak+sah" ) ) ][1]);
+						return([ $this->logout(), redirect()->to( base_url( "/signin?trigger=warning&&text=User+not+found+or+login+session+invalid" ) ) ][1]);
 					}
 					
 					// Get current timestamp.
@@ -256,11 +256,11 @@ final class Action extends BaseController
 						// If data inserted.
 						if( $insert )
 						{
-							return( redirect() )->to( base_url( "/?tab=report-make&&trigger=success&&text=Laporan+berhasil+dikirimkan" ) );
+							return( redirect() )->to( base_url( "/?tab=report-make&&trigger=success&&text=Report+successfully+sent" ) );
 						}
-						throw new Error( "Terjadi kesalahan saat mengirim laporan" );
+						throw new Error( "An error occurred while sending the report" );
 					}
-					throw new Error( "Terjadi kesalahan saat memindahkan gambar" );
+					throw new Error( "An error occurred while moving the image" );
 				}
 				catch( Throwable $e )
 				{
@@ -302,9 +302,9 @@ final class Action extends BaseController
 				// Check if response successfull inserted.
 				if( $insert )
 				{
-					return( redirect() )->to( base_url( "/?tab=report-validate&&trigger=success&&text=Tanggapan+laporan+telah+disimpan" ) );
+					return( redirect() )->to( base_url( "/?tab=report-validate&&trigger=success&&text=The+report+response+has+been+saved" ) );
 				}
-				throw new Error( "Terjadi kesalahan saat menambahkan tanggapan" );
+				throw new Error( "An error occurred while adding a response" );
 			}
 			catch( Throwable $e )
 			{
@@ -351,15 +351,15 @@ final class Action extends BaseController
 				// Check if username is exsists.
 				if( Models\Officer::exists([ "username" => $payload['username'] ]) )
 				{
-					return( redirect() )->to( base_url( "/?tab=officer&&trigger=warning&&text=Nama+Pengguna+telah+digunakan" ) );
+					return( redirect() )->to( base_url( "/?tab=officer&&trigger=warning&&text=Username+already+in+use" ) );
 				}
 				
 				// Check if officer successfull signup.
 				if( Models\Officer::insert( $payload ) )
 				{
-					return( redirect() )->to( base_url( "/?tab=officer&&trigger=success&&text=Petugas+berhasil+ditambahkan" ) );
+					return( redirect() )->to( base_url( "/?tab=officer&&trigger=success&&text=Officer+added+successfully" ) );
 				}
-				throw new Error( "Terjadi kesalahan saat menambahkan petugas" );
+				throw new Error( "An error occurred while adding officers" );
 			}
 			catch( Throwable $e )
 			{
@@ -473,11 +473,11 @@ final class Action extends BaseController
 					// Check if password is invalid.
 					if( password_verify( $password, $user->password ) === False )
 					{
-						throw new Error( "Kata sandi yang dimasukan salah" );
+						throw new Error( "The password entered is incorrect" );
 					}
 				}
 				else {
-					throw new Error( sprintf( "Nama pengguna %s tidak ditemukan", $username ) );
+					throw new Error( sprintf( "Username %s not found, or user may have disappeared", $username ) );
 				}
 				$this->authenticate(
 					login: $username,
@@ -530,13 +530,13 @@ final class Action extends BaseController
 			// Check if NIK is exsists.
 			if( Models\Publics::exists([ "nik" => $payload['nik'] ]) )
 			{
-				return( redirect() )->to( base_url( "/signup?trigger=warning&&text=NIK+telah+digunakan+oleh+masyarakat+lain" ) );
+				return( redirect() )->to( base_url( "/signup?trigger=warning&&text=Identification+Number+has+been+used+by+other+people" ) );
 			}
 			
 			// Check if username is exsists.
 			if( Models\Publics::exists([ "username" => $payload['username'] ]) )
 			{
-				return( redirect() )->to( base_url( "/signup?trigger=warning&&text=Nama+Pengguna+telah+digunakan" ) );
+				return( redirect() )->to( base_url( "/signup?trigger=warning&&text=Username+already+in+use" ) );
 			}
 			
 			try
@@ -551,7 +551,7 @@ final class Action extends BaseController
 					);
 					return( redirect() )->to( base_url( "/" ) );
 				}
-				throw new Error( "Terjadi kesalahan saat melakukan pendaftaran" );
+				throw new Error( "An error occurred during registration" );
 			}
 			catch( Throwable $e )
 			{
@@ -601,13 +601,13 @@ final class Action extends BaseController
 					// Check if password is invalid.
 					if( password_verify( $password_old, $user->password ) === False )
 					{
-						throw new Error( "Kata sandi yang dimasukan salah" );
+						throw new Error( "The password entered is incorrect" );
 					}
 					
 					// Check if password is not changed.
 					if( password_verify( $password_new, $user->password ) )
 					{
-						throw new Error( "Kata sandi harus berbeda dengan yang sebelumnya" );
+						throw new Error( "The password must be different from the previous one" );
 					}
 					
 					// If current login session is Officer.
@@ -622,12 +622,12 @@ final class Action extends BaseController
 					// If password updated successfully.
 					if( $update )
 					{
-						return( redirect() )->to( base_url( "/?tab=profile&&trigger=success&&text=Password+berhasil+diperbarui" ) );
+						return( redirect() )->to( base_url( "/?tab=profile&&trigger=success&&text=Password+updated+successfully" ) );
 					}
-					throw new Error( "Terjadi kesalahan saat memperbarui passwors" );
+					throw new Error( "An error occurred while updating the password" );
 				}
 				else {
-					return([ $this->logout(), redirect()->to( base_url( "/signin?trigger=warning&&text=Pengguna+tidak+ditemukan+atau+sesi+login+tidak+sah" ) ) ][1]);
+					return([ $this->logout(), redirect()->to( base_url( "/signin?trigger=warning&&text=User+not+found+or+login+session+invalid" ) ) ][1]);
 				}
 			}
 			catch( Throwable $e )
@@ -671,7 +671,7 @@ final class Action extends BaseController
 						// Check if username is exists.
 						if( Models\Officer::exists([ "username" => $username ]) )
 						{
-							throw new Error( "Nama pengguna telah digunakan" );
+							throw new Error( "Username already in use" );
 						}
 					}
 					else {
@@ -679,7 +679,7 @@ final class Action extends BaseController
 						// Check if username is exists.
 						if( Models\Publics::exists([ "username" => $username ]) )
 						{
-							throw new Error( "Nama pengguna telah digunakan" );
+							throw new Error( "Username already in use" );
 						}
 					}
 					$payload['username'] = $username;
@@ -703,7 +703,7 @@ final class Action extends BaseController
 							// Check if file is corrupt.
 							if( $avatarf->getError() )
 							{
-								return( redirect() )->to( base_url( "/?tab=profile&&trigger=warning&&text=Gambar+rusak+atau+cacat" ) );
+								return( redirect() )->to( base_url( "/?tab=profile&&trigger=warning&&text=Image+is+damaged+or+deformed" ) );
 							}
 							
 							// Get current timestamp.
@@ -720,7 +720,7 @@ final class Action extends BaseController
 							// When something wrong or error Error will thrown.
 							if( move_uploaded_file( $avatarf->getTempName(), FCPATH . $avatar ) === False )
 							{
-								throw new Error( "Terjadi kesalahan saat memindahkan gambar" );
+								throw new Error( "An error occurred while moving the image" );
 							}
 							$payload['avatar'] = $avatar;
 						}
@@ -750,9 +750,9 @@ final class Action extends BaseController
 							level: $this->isPublics() ? "publics" : ( $this->isAdmin() ? "admin" : "officer" ),
 							login: $payload['username'] ?? $username
 						);
-						return( redirect() )->to( base_url( "/?tab=profile&&trigger=success&&text=Profil+berhasil+diperbarui" ) );
+						return( redirect() )->to( base_url( "/?tab=profile&&trigger=success&&text=Profile+updated+successfully" ) );
 					}
-					throw new Error( "Terjadi kesalahan saat memperbarui profile" );
+					throw new Error( "An error occurred while updating the profile" );
 				}
 			}
 			catch( Throwable $e )
@@ -782,9 +782,9 @@ final class Action extends BaseController
 				// Check if complaint successfull verify.
 				if( Models\Complaint::update( [ "id", $this->request->getPost( "id" ) ], [ "status" => "process" ] ) )
 				{
-					return( redirect() )->to( base_url( "/?tab=report-verify&&trigger=success&&text=Laporan+pengaduan+telah+di+verifikasi" ) );
+					return( redirect() )->to( base_url( "/?tab=report-verify&&trigger=success&&text=The+complaint+report+has+been+successfully+verified" ) );
 				}
-				throw new Error( "Terjadi kesalahan saat melakukan verifikasi laporan pengaduan" );
+				throw new Error( "An error occurred while verifying the complaint report" );
 			}
 			catch( Throwable $e )
 			{

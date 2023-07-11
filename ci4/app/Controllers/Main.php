@@ -164,11 +164,27 @@ final class Main extends BaseController
 					if( $this->action->isAdmin() )
 					{
 						$data['account'] = [
-							"publics" => Models\Publics::self()->selectAll() ?? [],
-							"officer" => Models\Officer::self()->select([
-								"level",
-								"officer"
-							])
+							"publics" => Models\Publics::self()->selectAll([
+								"nik",
+								"avatar",
+								"fullname",
+								"username",
+								"callable",
+							]) ?? [],
+							"officer" => Models\Officer::self()->select(
+								column: [
+									"id",
+									"avatar",
+									"fullname",
+									"username",
+									"callable",
+									"level"
+								],
+								where: [
+									"level",
+									"officer"
+								]
+							) ?? []
 						];
 					}
 				}
@@ -190,7 +206,7 @@ final class Main extends BaseController
 		);
 		
 		// Return view application.
-		return( view( "main", [ "data" => json_encode( $data ) ] ) );
+		return( view( "main", [ "data" => json_encode( $data, JSON_INVALID_UTF8_IGNORE | JSON_INVALID_UTF8_SUBSTITUTE ) ] ) );
 	}
 	
 	/*
@@ -200,7 +216,7 @@ final class Main extends BaseController
 	 */
 	public function logout(): HTTP\RedirectResponse
 	{
-		return([ $this->action->logout(), redirect()->to( base_url( "/signin?trigger=info&&text=Sesi+telah+dihapus" ) ) ][1]);
+		return([ $this->action->logout(), redirect()->to( base_url( "/signin?trigger=info&&text=Session+has+been+deleted" ) ) ][1]);
 	}
 	
 }
